@@ -84,9 +84,9 @@ version = "0.8.3"
 
 [[GraphRecipes]]
 deps = ["AbstractTrees", "GeometryTypes", "InteractiveUtils", "Interpolations", "LightGraphs", "LinearAlgebra", "NaNMath", "NetworkLayout", "PlotUtils", "RecipesBase", "SparseArrays", "Statistics"]
-git-tree-sha1 = "2b84bae7060cada5e2d92f5865ec96fcd0d6e096"
+git-tree-sha1 = "a8619f8715d92cfc9d56a549a0d459bb655ae113"
 uuid = "bd48cda9-67a9-57be-86fa-5b3c104eda73"
-version = "0.5.3"
+version = "0.5.4"
 
 [[Inflate]]
 git-tree-sha1 = "f5fc07d4e706b84f72d54eedcc1c13d92fb0871c"

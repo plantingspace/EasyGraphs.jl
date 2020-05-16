@@ -66,7 +66,8 @@ draw(g::EasyGraph; kwargs...) = graphplot(
         (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
         for (k, v) in g.edgelabels
     ),
-    nodeshape=:rect;
+    nodeshape=:rect,
+    fontsize=12;
     kwargs...
 )
 
