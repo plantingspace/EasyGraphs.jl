@@ -1,4 +1,4 @@
-struct NaturalMap{T}
+@auto_hash_equals struct NaturalMap{T}
     items::Vector{T}
     indices::Dict{T, Int}
     function NaturalMap{T}() where T

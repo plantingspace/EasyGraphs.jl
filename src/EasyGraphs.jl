@@ -59,14 +59,16 @@ macro EasyGraph(ex)
     EasyGraph(ex)
 end
 
-draw(g::EasyGraph) = graphplot(
+draw(g::EasyGraph; kwargs...) = graphplot(
     g.lgraph,
     names=g.nodemap.items,
     edgelabel=Dict(
         (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
         for (k, v) in g.edgelabels
     ),
-    nodeshape=:rect
+    size=(1300, 700),
+    nodeshape=:rect;
+    kwargs...
 )
 
 macro draw(ex)
