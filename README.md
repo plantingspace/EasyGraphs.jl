@@ -45,3 +45,13 @@ Any types can be used:
   [1, 2], Dict(:a => :b) => "s"
 end
 ```
+
+Self-edges are supported:
+```
+@draw begin
+  :id, :A => :A
+  :f, :A => :B
+end
+```
+
+Single node with self-edge is broken due to https://github.com/JuliaPlots/GraphRecipes.jl/issues/97

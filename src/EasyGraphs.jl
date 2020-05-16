@@ -5,7 +5,7 @@ include("NaturalMap.jl")
 EasyEdge = Tuple{T, Pair} where T
 
 using LightGraphs
-using Plots, GraphRecipes
+using GraphRecipes
 
 struct EasyGraph <: AbstractGraph{Int}
     lgraph::SimpleDiGraph{Int}
@@ -66,7 +66,6 @@ draw(g::EasyGraph; kwargs...) = graphplot(
         (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
         for (k, v) in g.edgelabels
     ),
-    size=(1300, 700),
     nodeshape=:rect;
     kwargs...
 )
