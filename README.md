@@ -7,7 +7,7 @@ Features:
 - drawing of specified graphs
 - DSL for easy drawing of graphs
 
-> Nodes can not have Int labels for now.
+> Nodes can not have `Int` labels for now.
 
 Imperative graph specification:
 ```

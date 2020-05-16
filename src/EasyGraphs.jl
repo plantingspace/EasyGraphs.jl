@@ -66,7 +66,6 @@ draw(g::EasyGraph) = graphplot(
         (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
         for (k, v) in g.edgelabels
     ),
-    size=(1300, 700),
     nodeshape=:rect
 )
 
