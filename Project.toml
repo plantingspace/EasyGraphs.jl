@@ -1,0 +1,10 @@
+name = "EasyGraphs"
+uuid = "740bd50f-a2e6-49b5-9388-24c06f814f0e"
+authors = ["keorn <git@i.keorn.org>"]
+version = "0.1.0"
+
+[deps]
+GraphRecipes = "bd48cda9-67a9-57be-86fa-5b3c104eda73"
+LightGraphs = "093fc24a-ae57-5d10-9952-331d41423f4d"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
