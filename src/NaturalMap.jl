@@ -1,3 +1,5 @@
+using AutoHashEquals
+
 @auto_hash_equals struct NaturalMap{T}
     items::Vector{T}
     indices::Dict{T, Int}
