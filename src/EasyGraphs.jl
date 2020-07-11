@@ -67,7 +67,7 @@ draw(g::EasyGraph; kwargs...) = graphplot(
         for (k, v) in g.edgelabels
     ),
     nodeshape=:rect,
-    fontsize=12;
+    fontsize=12,
     kwargs...
 )
 
