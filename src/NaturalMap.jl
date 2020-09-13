@@ -36,8 +36,11 @@ function Base.haskey(nat::NaturalMap, index::Integer)
     index <= length(nat.items)
 end
 function Base.delete!(nat::NaturalMap{T}, key::T) where T
-    nat.items[nat.indices[key]] = nat.items[end]
+    idx = nat.indices[key]
+    newitem = nat.items[end]
+    nat.items[idx] = newitem
     pop!(nat.items)
+    nat.indices[newitem] = idx
     delete!(nat.indices, key)
 end
 function Base.delete!(nat::NaturalMap, index::Integer)
