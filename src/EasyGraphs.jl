@@ -4,7 +4,7 @@ include("NaturalMap.jl")
 
 EasyEdge = Tuple{Pair, T} where T
 
-using LightGraphs, Plots, GraphRecipes
+using LightGraphs, Plots, GraphRecipes, TikzGraphs
 
 struct EasyGraph <: AbstractGraph{Int}
     lgraph::SimpleDiGraph{Int}
@@ -67,12 +67,6 @@ edgelabels(g::EasyGraph) = Dict(
       for (k, v) in g.edgelabels if !isnothing(v)
 )
 
-"To be used with TikzGraphs.jl"
-edgestyles(g::EasyGraph) = Dict(
-    (k.src, k.dst) => "loop right"
-      for (k, v) in g.edgelabels if k.src == k.dst
-)
-
 draw(g::EasyGraph; kwargs...) = graphplot(
     g.lgraph,
     names=g.nodemap.items,
@@ -82,10 +76,27 @@ draw(g::EasyGraph; kwargs...) = graphplot(
     kwargs...
 )
 
+edgestyles(g::EasyGraph) = Dict(
+    (k.src, k.dst) => "loop right"
+      for (k, v) in g.edgelabels if k.src == k.dst
+)
+
+tdraw(g::EasyGraph) = TikzGraphs.plot(
+    g.lgraph,
+    map(string, g.nodemap.items),
+    edge_labels = edgelabels(g),
+    edge_styles = edgestyles(g)
+)
+
 macro draw(ex)
     :(draw($(EasyGraph(ex))))
 end
 
-export EasyGraph, @EasyGraph, draw, @draw
+macro tikz_draw(ex)
+    :(tdraw($(EasyGraph(ex))))
+end
+
+
+export EasyGraph, @EasyGraph, draw, @draw, tdraw, @tdraw
 
 end
