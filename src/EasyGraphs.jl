@@ -58,13 +58,21 @@ macro EasyGraph(ex)
     EasyGraph(ex)
 end
 
+edgelabels(g::EasyGraph) = Dict(
+    (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
+      for (k, v) in g.edgelabels
+)
+
+"To be used with TikzGraphs.jl"
+edgestyles(g::EasyGraph) = Dict(
+    (k.src, k.dst) => "loop right"
+      for (k, v) in g.edgelabels if k.src == k.dst
+)
+
 draw(g::EasyGraph; kwargs...) = graphplot(
     g.lgraph,
     names=g.nodemap.items,
-    edgelabel=Dict(
-        (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
-        for (k, v) in g.edgelabels
-    ),
+    edgelabel= edgelabels(g),
     nodeshape=:rect,
     fontsize=12,
     kwargs...
