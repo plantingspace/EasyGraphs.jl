@@ -21,7 +21,9 @@ function Base.push!(graph::EasyGraph, edge::EasyEdge)
     if push!(graph.nodemap, dst) add_vertex!(graph.lgraph) end
     ledge = Edge(graph.nodemap[src], graph.nodemap[dst])
     add_edge!(graph.lgraph, ledge)
-    push!(get!(Set, graph.edgelabels, ledge), label)
+    if !isnothing(label)
+        push!(get!(Set, graph.edgelabels, ledge), label)
+    end
     graph
 end
 
@@ -64,7 +66,7 @@ end
 
 edgelabels(g::EasyGraph) = Dict(
     (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
-      for (k, v) in g.edgelabels if !isnothing(v)
+      for (k, v) in g.edgelabels
 )
 
 draw(g::EasyGraph; kwargs...) = graphplot(
@@ -81,18 +83,19 @@ edgestyles(g::EasyGraph) = Dict(
       for (k, v) in g.edgelabels if k.src == k.dst
 )
 
-tdraw(g::EasyGraph) = TikzGraphs.plot(
+tdraw(g::EasyGraph; kwargs...) = TikzGraphs.plot(
     g.lgraph,
     map(string, g.nodemap.items),
     edge_labels = edgelabels(g),
-    edge_styles = edgestyles(g)
+    edge_styles = edgestyles(g),
+    kwargs...
 )
 
 macro draw(ex)
     :(draw($(EasyGraph(ex))))
 end
 
-macro tikz_draw(ex)
+macro tdraw(ex)
     :(tdraw($(EasyGraph(ex))))
 end
 
