@@ -88,6 +88,7 @@ tdraw(g::EasyGraph; kwargs...) = TikzGraphs.plot(
     map(string, g.nodemap.items);
     edge_labels = edgelabels(g),
     edge_styles = edgestyles(g),
+    options = "scale=3",
     kwargs...
 )
 
