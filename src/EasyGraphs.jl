@@ -25,6 +25,10 @@ function Base.push!(graph::EasyGraph, edge::EasyEdge)
     graph
 end
 
+function Base.push!(graph::EasyGraph, edge::Pair)
+    push!(graph, (edge, nothing))
+end
+
 function Base.delete!(graph::EasyGraph, vertex::Any)
     index = graph.nodemap[vertex]
     lastindex = length(graph.nodemap.items)
@@ -43,7 +47,7 @@ function Base.delete!(graph::EasyGraph, vertex::Any)
     graph
 end
 
-EasyGraph(edges::EasyEdge...) = reduce(push!, edges; init=EasyGraph())
+EasyGraph(edges::Union{EasyEdge, Pair}...) = reduce(push!, edges; init=EasyGraph())
 
 function EasyGraph(ex::Expr)
     if ex.head == :block
@@ -60,7 +64,7 @@ end
 
 edgelabels(g::EasyGraph) = Dict(
     (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
-      for (k, v) in g.edgelabels
+      for (k, v) in g.edgelabels if !isnothing(v)
 )
 
 "To be used with TikzGraphs.jl"
