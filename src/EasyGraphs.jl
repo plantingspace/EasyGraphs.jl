@@ -85,7 +85,7 @@ edgestyles(g::EasyGraph) = Dict(
 
 tdraw(g::EasyGraph; kwargs...) = TikzGraphs.plot(
     g.lgraph,
-    map(string, g.nodemap.items),
+    map(string, g.nodemap.items);
     edge_labels = edgelabels(g),
     edge_styles = edgestyles(g),
     kwargs...
