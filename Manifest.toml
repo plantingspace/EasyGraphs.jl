@@ -209,7 +209,9 @@ version = "2.59.0+4"
 
 [[GraphRecipes]]
 deps = ["AbstractTrees", "GeometryTypes", "InteractiveUtils", "Interpolations", "LightGraphs", "LinearAlgebra", "NaNMath", "NetworkLayout", "PlotUtils", "RecipesBase", "SparseArrays", "Statistics"]
-git-tree-sha1 = "a8619f8715d92cfc9d56a549a0d459bb655ae113"
+git-tree-sha1 = "c8108537dac7dae64f7912df856a51d5ae38a7fd"
+repo-rev = "master"
+repo-url = "https://github.com/JuliaPlots/GraphRecipes.jl"
 uuid = "bd48cda9-67a9-57be-86fa-5b3c104eda73"
 version = "0.5.4"
 
