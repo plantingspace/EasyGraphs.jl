@@ -2,7 +2,7 @@ module EasyGraphs
 
 include("NaturalMap.jl")
 
-EasyEdge = Tuple{T, Pair} where T
+EasyEdge = Tuple{Pair, T} where T
 
 using LightGraphs, Plots, GraphRecipes
 
@@ -16,7 +16,7 @@ end
 EasyGraph() = EasyGraph(SimpleDiGraph{Int}(), NaturalMap{Any}(), Dict())
 
 function Base.push!(graph::EasyGraph, edge::EasyEdge)
-    (label, (src, dst)) = edge
+    ((src, dst), label) = edge
     if push!(graph.nodemap, src) add_vertex!(graph.lgraph) end
     if push!(graph.nodemap, dst) add_vertex!(graph.lgraph) end
     ledge = Edge(graph.nodemap[src], graph.nodemap[dst])
@@ -74,6 +74,6 @@ macro draw(ex)
     :(draw($(EasyGraph(ex))))
 end
 
-export EasyGraph, draw, @draw
+export EasyGraph, @EasyGraph, draw, @draw
 
 end

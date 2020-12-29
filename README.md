@@ -12,45 +12,45 @@ Features:
 Imperative graph specification:
 ```
 g = EasyGraph()
-push!(g, (:hates, "Bob" => "Alice"))
-push!(g, (:loves, "Alice" => "Julia"))
+push!(g, ("Bob" => "Alice", :hates))
+push!(g, ("Alice" => "Julia", :loves))
 draw(g)
 ```
 
 Declarative graph specification:
 ```
-g = EasyGraph((:hates, "Bob" => "Alice"), (:loves, "Alice" => "Julia"))
+g = EasyGraph(("Bob" => "Alice", :hates), ("Alice" => "Julia", :loves))
 draw(g)
 ```
 
 Easy DSL specification:
 ```
 @draw begin
-  :hates, "Bob" => "Alice"
-  :loves, "Alice" => "Julia"
+  "Bob" => "Alice", :hates
+  "Alice" => "Julia", :loves
 end
 ```
 
 Multigraphs use a single edge with `Set` of labels:
 ```
 @draw begin
-  "hates", "Bob" => "Alice"
-  "loves", "Bob" => "Alice"
+  "Bob" => "Alice", "hates"
+  "Bob" => "Alice", "loves"
 end
 ```
 
 Any types can be used:
 ```
 @draw begin
-  [1, 2], Dict(:a => :b) => "s"
+  Dict(:a => :b) => "s", [1, 2]
 end
 ```
 
 Self-edges are supported:
 ```
 @draw begin
-  :id, :A => :A
-  :f, :A => :B
+  :A => :A, :id
+  :A => :B, :f
 end
 ```
 
