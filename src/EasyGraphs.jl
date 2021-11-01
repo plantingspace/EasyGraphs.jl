@@ -4,7 +4,7 @@ include("NaturalMap.jl")
 
 EasyEdge = Tuple{Pair, T} where T
 
-using LightGraphs, Plots, GraphRecipes, TikzGraphs
+using Graphs#, Plots, GraphRecipes, TikzGraphs
 
 struct EasyGraph <: AbstractGraph{Int}
     lgraph::SimpleDiGraph{Int}
@@ -64,43 +64,43 @@ macro EasyGraph(ex)
     EasyGraph(ex)
 end
 
-edgelabels(g::EasyGraph) = Dict(
-    (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
-      for (k, v) in g.edgelabels
-)
+# edgelabels(g::EasyGraph) = Dict(
+#     (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
+#       for (k, v) in g.edgelabels
+# )
 
-draw(g::EasyGraph; kwargs...) = graphplot(
-    g.lgraph,
-    names=g.nodemap.items,
-    edgelabel= edgelabels(g),
-    nodeshape=:rect,
-    fontsize=12,
-    kwargs...
-)
+# draw(g::EasyGraph; kwargs...) = graphplot(
+#     g.lgraph,
+#     names=g.nodemap.items,
+#     edgelabel= edgelabels(g),
+#     nodeshape=:rect,
+#     fontsize=12,
+#     kwargs...
+# )
 
-edgestyles(g::EasyGraph) = Dict(
-    (k.src, k.dst) => "loop right"
-      for (k, v) in g.edgelabels if k.src == k.dst
-)
+# edgestyles(g::EasyGraph) = Dict(
+#     (k.src, k.dst) => "loop right"
+#       for (k, v) in g.edgelabels if k.src == k.dst
+# )
 
-tdraw(g::EasyGraph; kwargs...) = TikzGraphs.plot(
-    g.lgraph,
-    map(string, g.nodemap.items);
-    edge_labels = edgelabels(g),
-    edge_styles = edgestyles(g),
-    options = "scale=3",
-    kwargs...
-)
+# tdraw(g::EasyGraph; kwargs...) = TikzGraphs.plot(
+#     g.lgraph,
+#     map(string, g.nodemap.items);
+#     edge_labels = edgelabels(g),
+#     edge_styles = edgestyles(g),
+#     options = "scale=3",
+#     kwargs...
+# )
 
-macro draw(ex)
-    :(draw($(EasyGraph(ex))))
-end
+# macro draw(ex)
+#     :(draw($(EasyGraph(ex))))
+# end
 
-macro tdraw(ex)
-    :(tdraw($(EasyGraph(ex))))
-end
+# macro tdraw(ex)
+#     :(tdraw($(EasyGraph(ex))))
+# end
 
 
-export EasyGraph, @EasyGraph, draw, @draw, tdraw, @tdraw
+# export EasyGraph, @EasyGraph, draw, @draw, tdraw, @tdraw
 
 end
