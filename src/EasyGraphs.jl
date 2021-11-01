@@ -4,7 +4,7 @@ include("NaturalMap.jl")
 
 EasyEdge = Tuple{Pair, T} where T
 
-using Graphs#, Plots, GraphRecipes, TikzGraphs
+using LightGraphs#, Plots, GraphRecipes, TikzGraphs
 
 struct EasyGraph <: AbstractGraph{Int}
     lgraph::SimpleDiGraph{Int}
