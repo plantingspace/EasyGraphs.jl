@@ -2,9 +2,47 @@ module EasyGraphs
 
 include("NaturalMap.jl")
 
-EasyEdge = Tuple{Pair, T} where T
+const EasyEdge = Tuple{Pair, T} where T
 
-using LightGraphs, Plots, GraphRecipes, TikzGraphs
+using LightGraphs
+using Requires
+
+function __init__()
+    @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" begin
+        @require GraphRecipes="bd48cda9-67a9-57be-86fa-5b3c104eda73" begin
+            edgelabels(g::EasyGraph) = Dict(
+                (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
+                for (k, v) in g.edgelabels
+            )
+
+            draw(g::EasyGraph; kwargs...) = graphplot(
+                g.lgraph,
+                names=g.nodemap.items,
+                edgelabel=edgelabels(g),
+                nodeshape=:rect,
+                fontsize=12,
+                kwargs...
+            )
+
+            edgestyles(g::EasyGraph) = Dict(
+                (k.src, k.dst) => "loop right"
+                for (k, v) in g.edgelabels if k.src == k.dst
+            )
+        end
+    end
+    @require TikzGraphs="b4f28e30-c73f-5eaf-a395-8a9db949a742" begin
+        function tdraw(g::EasyGraph; kwargs...)
+            TikzGraphs.plot(
+                g.lgraph,
+                map(string, g.nodemap.items);
+                edge_labels = edgelabels(g),
+                edge_styles = edgestyles(g),
+                options = "scale=3",
+                kwargs...
+            )
+        end
+    end
+end
 
 struct EasyGraph <: AbstractGraph{Int}
     lgraph::SimpleDiGraph{Int}
@@ -64,33 +102,11 @@ macro EasyGraph(ex)
     EasyGraph(ex)
 end
 
-edgelabels(g::EasyGraph) = Dict(
-    (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
-      for (k, v) in g.edgelabels
-)
+# ---------
+# # Drawing
 
-draw(g::EasyGraph; kwargs...) = graphplot(
-    g.lgraph,
-    names=g.nodemap.items,
-    edgelabel= edgelabels(g),
-    nodeshape=:rect,
-    fontsize=12,
-    kwargs...
-)
-
-edgestyles(g::EasyGraph) = Dict(
-    (k.src, k.dst) => "loop right"
-      for (k, v) in g.edgelabels if k.src == k.dst
-)
-
-tdraw(g::EasyGraph; kwargs...) = TikzGraphs.plot(
-    g.lgraph,
-    map(string, g.nodemap.items);
-    edge_labels = edgelabels(g),
-    edge_styles = edgestyles(g),
-    options = "scale=3",
-    kwargs...
-)
+function draw end
+function tdraw end
 
 macro draw(ex)
     :(draw($(EasyGraph(ex))))
@@ -99,7 +115,6 @@ end
 macro tdraw(ex)
     :(tdraw($(EasyGraph(ex))))
 end
-
 
 export EasyGraph, @EasyGraph, draw, @draw, tdraw, @tdraw
 
