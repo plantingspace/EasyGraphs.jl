@@ -4,7 +4,7 @@ include("NaturalMap.jl")
 
 const EasyEdge = Tuple{Pair, T} where T
 
-using LightGraphs
+using Graphs
 using Requires
 
 function __init__()
