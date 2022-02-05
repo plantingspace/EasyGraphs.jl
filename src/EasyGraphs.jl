@@ -10,10 +10,8 @@ using Requires
 function __init__()
     @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" begin
         @require GraphRecipes="bd48cda9-67a9-57be-86fa-5b3c104eda73" begin
-            edgelabels(g::EasyGraph) = Dict(
-                (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
-                for (k, v) in g.edgelabels
-            )
+        using .Plots
+        using .GraphRecipes
 
             draw(g::EasyGraph; kwargs...) = graphplot(
                 g.lgraph,
@@ -86,6 +84,11 @@ function Base.delete!(graph::EasyGraph, vertex::Any)
     end
     graph
 end
+
+edgelabels(g::EasyGraph) = Dict(
+                (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
+                for (k, v) in g.edgelabels
+            )
 
 EasyGraph(edges::Union{EasyEdge, Pair}...) = reduce(push!, edges; init=EasyGraph())
 
