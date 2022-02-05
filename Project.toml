@@ -1,7 +1,7 @@
 name = "EasyGraphs"
 uuid = "740bd50f-a2e6-49b5-9388-24c06f814f0e"
 authors = ["keorn <git@i.keorn.org>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 AutoHashEquals = "15f4f7f2-30c1-5605-9d31-71845cf9641f"
