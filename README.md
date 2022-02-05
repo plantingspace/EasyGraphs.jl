@@ -7,6 +7,13 @@ Features:
 - drawing of specified graphs
 - DSL for easy drawing of graphs
 
+## Optional dependencies
+To reduce the load times of this package, the drawing functionality has been implemented via optional dependencies. 
+To use the `@tdraw` macro or the `tdraw` function, `using TikzGraphs` needs to be run first. 
+To use the `@draw` macro or the `draw` function, `using Plots, GraphRecipes` needs to be run first. 
+
+## Use
+
 > Nodes can not have `Int` labels for now.
 
 Imperative graph specification:
