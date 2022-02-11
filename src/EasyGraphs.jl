@@ -21,11 +21,6 @@ function __init__()
                 fontsize=12,
                 kwargs...
             )
-
-            edgestyles(g::EasyGraph) = Dict(
-                (k.src, k.dst) => "loop right"
-                for (k, v) in g.edgelabels if k.src == k.dst
-            )
         end
     end
     @require TikzGraphs="b4f28e30-c73f-5eaf-a395-8a9db949a742" begin
@@ -89,6 +84,10 @@ edgelabels(g::EasyGraph) = Dict(
                 (k.src, k.dst) => v isa Set && length(v) == 1 ? first(v) : join(v, ", ")
                 for (k, v) in g.edgelabels
             )
+edgestyles(g::EasyGraph) = Dict(
+    (k.src, k.dst) => "loop right"
+    for (k, v) in g.edgelabels if k.src == k.dst
+)
 
 EasyGraph(edges::Union{EasyEdge, Pair}...) = reduce(push!, edges; init=EasyGraph())
 
