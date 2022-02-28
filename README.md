@@ -11,6 +11,7 @@ Features:
 To reduce the load times of this package, the drawing functionality has been implemented via optional dependencies. 
 To use the `@tdraw` macro or the `tdraw` function, `using TikzGraphs` needs to be run first. 
 To use the `@draw` macro or the `draw` function, `using Plots, GraphRecipes` needs to be run first. 
+To use the `@mdraw` macro or the `mdraw` function, you need to run `using GraphMakie` first, as well as `using` your favourite Makie backend (i.e. `CairoMakie`).
 
 ## Use
 
