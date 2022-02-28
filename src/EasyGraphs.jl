@@ -40,6 +40,21 @@ function __init__()
             )
         end
     end
+
+    @require GraphMakie="1ecd5474-83a3-4783-bb4f-06765db800d2" begin
+        function mdraw(g::EasyGraph; kwargs...)
+            nlabs = string.(strip.(string.(g.nodemap.items), [':']))
+            elabs = isempty(edgelabels(g)) ? nothing : 
+                collect(values(edgelabels(g)))
+            GraphMakie.graphplot(
+                g.lgraph;
+                nlabels=nlabs,
+                elabels = elabs,
+                curve_distance_usage = false,
+                kwargs...
+            )
+        end
+    end
 end
 
 struct EasyGraph <: AbstractGraph{Int}
@@ -119,6 +134,10 @@ macro tdraw(ex)
     :(tdraw($(EasyGraph(ex))))
 end
 
-export EasyGraph, @EasyGraph, draw, @draw, tdraw, @tdraw
+macro mdraw(ex)
+    :(mdraw($(EasyGraph(ex))))
+end
+
+export EasyGraph, @EasyGraph, draw, @draw, tdraw, @tdraw, mdraw, @mdraw
 
 end
